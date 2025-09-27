@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Toko Minuman Segar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Toko Minuman Segar</h1>
+        <nav>
+            <a href="#">Beranda</a>
+            <a href="#menu">Menu</a>
+            <a href="#order">Order</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Segarkan harimu dengan minuman dingin!</h2>
+    </section>
+
+    <section id="menu">
+        <h3>Menu Minuman</h3>
+        <div class="produk-container">
+            {% for m in daftar_minuman %}
+            <div class="produk">
+                <img src="{{ m.gambar }}" alt="{{ m.nama }}">
+                <h4>{{ m.nama }}</h4>
+                <p>Rp {{ "{:,.0f}".format(m.harga) }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="order">
+        <h3>Form Pemesanan</h3>
+        <form method="POST">
+            <input type="text" name="nama" placeholder="Nama Anda" required>
+            <select name="minuman" required>
+                <option value="" disabled selected>Pilih Minuman</option>
+                {% for m in daftar_minuman %}
+                <option value="{{ m.nama }}">{{ m.nama }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Pesan</button>
+        </form>
+
+        {% if pesan %}
+        <p class="pesan">{{ pesan }}</p>
+        {% endif %}
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Toko Minuman Segar</p>
+        <p>Instagram: @minumansegar | WA: 0812-3456-7890</p>
+    </footer>
+</body>
+</html>
